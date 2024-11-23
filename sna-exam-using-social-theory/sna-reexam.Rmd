@@ -357,9 +357,11 @@ edge_density(net_routes, loops = F) # 0.02358611
 igraph::edge_density(net_routes) # 0.0235
 
 
+```
 
-        # 4. What is the average degree of the network?
+##### 4. What is the average degree of the network?
 
+```{r}
 
 # Total edges / total nodes
 
@@ -368,11 +370,11 @@ igraph::edge_density(net_routes) # 0.0235
 # or (N-1)*density
 
 (vcount(net_routes) - 1) * 0.02358611 # 5.51915
+```
 
+##### 5. What is the average shortest path of the network?
 
-
-        # 5. What is the average shortest path of the network?
-
+```{r}
 mean_distance(net_routes, directed=T) # The mean of the shortest path between 
                                       #  each pair of vertices = 3.006053 
 
@@ -388,12 +390,11 @@ igraph::reciprocity(net_routes) # reciprocity = 0 , there are no mutual connecti
 
 
 igraph::triad_census(net_routes)# transitivity
+```
 
+##### 6. Which are the 5 most central airports in this network? Use 3 different centrality measures and present the top airports in a nice table. Describe and interpret the results.
 
-        # 6. Which are the 5 most central airports in this network? Use 3 different centrality measures
-        #    and present the top airports in a nice table. Describe and interpret the results.
-
-
+```{r}
 
 # New objects for centrality measures
 
@@ -458,7 +459,6 @@ library(gridExtra)
 library(grid)
 library(gt)
 
-dev.off()
 
 grid.table(top_air)
 
@@ -478,10 +478,12 @@ igraph::degree(net_routes, 137, mode="in")
 igraph::degree(net_routes, 137, mode="all")
 
 
+```
 
+##### 7. Are there different communities in the network (use Louvain algorithm)? Describe, interpret and visualize the results.
 
-        # 7. Are there different communities in the network (use Louvain algorithm)? Describe, interpret
-        #    and visualise the results.
+```{r}
+
 
 is_connected(net_routes) # TRUE, the network is connected, all nodes are connected somehow
 component_distribution(net_routes)
@@ -495,7 +497,7 @@ net_comm = graph.data.frame(d=edges_1, vertices = nodes, directed=F) # turning i
 # Louvain community detection algorithm
 
 lou_net_routes <- cluster_louvain(net_comm, weights=NULL)
-class(comm)
+
 
 lou_net_routes$membership 
 
@@ -544,14 +546,13 @@ plot(lou_net_routes,
 
 
 
+```
 
+### IRON MAN MOVIE (interactions of characters)
 
-## IRON MAN MOVIE (interactions of characters)----------------------------------
+```{r}
 
-install.packages("devtools")
-devtools::install_github("pj398/movienetdata")
-
-
+library(devtools)
 library(movienetdata)
 library(network)
 
@@ -559,13 +560,16 @@ library(network)
 
 data(package = "movienetdata")
 force(mcu01_ironman)
-iron <- movienetdata::mcu01_ironman
+iron_network <- movienetdata::mcu01_ironman
 
 iron
 
 iron$event_list
 iron$node_list
 iron$adjacency
+```
+
+```{r}
 
 # Node list
 
@@ -579,26 +583,35 @@ iron_edgelist <- as.matrix(iron_network, matrix.type="edgelist")
 iron_edges <- as.data.frame(iron_edgelist) #
 
 
+```
 
+```{r}
 # "Network" object 
 
 iron_network <- network(iron$adjacency)  #
 class(iron_network)
 iron_network
+```
 
+```{r}
 
-# "Igraph" object
-
-iron_igraph = graph_from_data_frame(d=iron_edges, vertices = iron_nodes) #
-class(iron_igraph)
-iron_igraph
-
-# or
+# # "Igraph" object
+# 
+# iron_igraph = graph_from_data_frame(d=iron_edges, vertices = iron_nodes) #
+# class(iron_igraph)
+# iron_igraph
+# 
+# 
+# # or
 
 
 iron_g <- asIgraph(iron_network) #
 class(iron_g)
 iron_g
+
+```
+
+```{r}
 
 
 # Plot of adjacency matrix, as done by Matthew Lincoln (2014) in: https://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html
@@ -613,6 +626,11 @@ ggplot(iron_edges, aes(x = V1, y = V2)) +
                 axis.text.x = element_text(angle = 270, hjust = 0),
                 aspect.ratio = 0.9,
                 legend.position= "none")
+
+
+```
+
+```{r}
 
 
 
