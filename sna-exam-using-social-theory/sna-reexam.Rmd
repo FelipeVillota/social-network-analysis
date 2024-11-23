@@ -1,0 +1,44 @@
+---
+title: "sna-reexam"
+author: "Luis Felipe Villota Macías"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# RE-EXAM ASSIGNMENT - SOCIAL NETWORK ANALYSIS MODULE: AIRLINES, IRON MAN MOVIE AND OTHERS
+
+## Exploring social networks and analyzing their properties
+
+## Loading packages
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)	
+library(psych)	
+library(gridExtra)
+library(readr)
+library(skimr)
+library(network)
+library(plyr)
+library(igraph)
+library(intergraph)
+library(sna)
+library(RColorBrewer)
+library(vcd)
+library(ggplot2)
+library(networkR)
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
