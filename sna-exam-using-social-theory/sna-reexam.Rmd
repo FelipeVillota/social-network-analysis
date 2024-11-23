@@ -276,10 +276,9 @@ plot(net_comm_1,
 
 # Adjacency matrix
 
-as_adj_matrix( net_routes,
+as_adjacency_matrix( net_routes,
         type = c("both"),
         attr = NULL,
-        edges = TRUE,
         names = TRUE,
         sparse = TRUE)
 
@@ -297,19 +296,17 @@ as_edgelist(net_routes, names=T)
 
 ### Network Analysis Questions
 
-#### Question 1: Network Direction
+##### 1. Is the network directed or undirected?
 
 ```{r}
-
-
-# Questions (7 in total):
-
-        # 1. Is the network directed or undirected?
+        
 
 is_directed(net_routes) # TRUE , the network is directed
+```
 
-        # 2. How many airport and flights routes there are?
+##### 2. How many airport and flights routes there are?
 
+```{r}
 
 length(unique(nodes$Code)) # 235 unique airports by "Code". Note: The variable "Label" is misguiding 
 unique(nodes$Code)         # for looking at this uniqueness because some names are repeated but have different "Code".
@@ -334,12 +331,14 @@ nrow(unique(edges_1[,c("edges.Source", "edges.Target")])) # 1297 unique flights
 # This means that there are no observations in our data that have more than one connection 
 # between the same two nodes.
 
+```
+
+##### 3. What is the density of the network?
+
+```{r}
 
 
-        # 3. What is the density of the network?
-
-
-        # Density for a directed network: N*(N-1)
+# Density for a directed network: N*(N-1)
 
 ecount(net_routes)/((vcount(net_routes) * (vcount(net_routes) - 1))) # 0.0235
                                                                      
