@@ -59,7 +59,7 @@ nodes = read.csv("C:/Users/USER/Desktop/codebaker/all_r/social-network-analysis/
 
 ```
 
-###### Basic descriptive and exploratory data analysis of raw data
+##### Basic descriptive and exploratory data analysis of raw data
 
 ```{r}
 
@@ -114,7 +114,7 @@ unique(edges$Target)
 
 ```
 
-###### Checking for missing values
+##### Checking for missing values
 
 ```{r}
 any(is.na(edges)) # FALSE
@@ -125,7 +125,7 @@ colSums(is.na(edges)) # No missing values
 colSums(is.na(nodes)) # No missing values 
 ```
 
-###### We can proceed now onto dataset management
+##### We can proceed now onto dataset management
 
 ```{r}
 
@@ -158,7 +158,7 @@ V(net_routes)$degree
 
 ```
 
-###### Histogram of node degree
+##### Histogram of node degree
 
 ```{r}
 
@@ -181,7 +181,7 @@ hist(igraph::degree(net_routes, mode = "all"))
 
 ```
 
-###### Network Visualization
+##### Network Visualization
 
 ```{r}
 # Plotting the network of routes(flights) made between airports
@@ -212,7 +212,7 @@ plot(net_routes,
      layout= layout.kamada.kawai)
 ```
 
-###### Hub and authorities scores
+##### Hub and authorities scores
 
 ```{r}
 # Hub and authorities scores 
@@ -251,7 +251,7 @@ plot(net_routes,
 par(mfrow =c(1,1))
 ```
 
-###### Community Detection
+##### Community Detection
 
 ```{r}
 
@@ -270,7 +270,7 @@ plot(net_comm_1,
 
 ```
 
-###### Network Properties Analysis
+##### Network Properties Analysis
 
 ```{r}
 
@@ -550,7 +550,7 @@ plot(lou_net_routes,
 
 ### IRON MAN MOVIE (interactions of characters)
 
-#### Loading libraries and dataset 
+##### Loading libraries and dataset 
 
 ```{r}
 
@@ -571,7 +571,7 @@ iron$node_list
 iron$adjacency
 ```
 
-#### Nodes and edges 
+##### Nodes and edges 
 
 ```{r}
 
@@ -589,7 +589,7 @@ iron_edges <- as.data.frame(iron_edgelist) #
 
 ```
 
-#### Network object
+##### Network object
 
 ```{r}
 # "Network" object 
@@ -599,7 +599,7 @@ class(iron_network)
 iron_network
 ```
 
-#### Igraph object
+##### Igraph object
 
 ```{r}
 
@@ -619,11 +619,12 @@ iron_g
 
 ```
 
-#### Plot of adjacency matrix
+##### Plot of adjacency matrix
 
 ```{r}
 
 #  As done by Matthew Lincoln (2014) in: https://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html
+
 
 
 ggplot(iron_edges, aes(x = V1, y = V2)) +
@@ -642,18 +643,19 @@ ggplot(iron_edges, aes(x = V1, y = V2)) +
 ```{r}
 
 
-
 #         8. Is the network directed or undirected?
 
 
-summary(iron_igraph)
+# summary(iron_igraph)
 summary(iron_g)
 summary(iron_network) # Directed
 
 is.directed(iron_g) 
-is.directed(iron_igraph) # TRUE, the network is directed
+# is.directed(iron_igraph) # TRUE, the network is directed
 
+```
 
+```{r}
 #         9. How many actors and ties there are?
 
 network.edgecount(iron_network)  # 54 connections 
@@ -661,13 +663,20 @@ network.edgecount(iron_network)  # 54 connections
 network.size(iron_network) # 18 vertices/characters
 network.vertex.names(iron_network) # Characters' names 
 
+```
+
+```{r}
+
 
 #         10. What is the density of the network?
 
 network.density(iron_network) # 0.1764706    
 
-edge_density(iron_igraph, loops = FALSE) # 0.1764706
+edge_density(iron_g, loops = FALSE) # 0.1764706
 
+```
+
+```{r}
 
 #         11. What is the average degree of the network?
 
@@ -679,21 +688,30 @@ edge_density(iron_igraph, loops = FALSE) # 0.1764706
 
 (vcount(iron_g) - 1) * 0.1764706 # 3
 
+```
+
+```{r}
+
 
 
 #         12. What is the average shortest path of the network?
 
-mean_distance(iron_igraph, directed=T) # The mean of the shortest path between 
+mean_distance(iron_g, directed=T) # The mean of the shortest path between 
 #  each pair of vertices = 1.98366 
 
 distances(iron_g, weights = NA)
+```
+
+```{r}
+
 
 #         13. Who are the 3 most important characters in this movie in terms of speaking themselves?
 
 top3_iron_speakers<- slice_max(iron_nodes, order_by = iron_nodes$nlines, n= 3)
-dev.off()
-grid.table(top3_iron_speakers) # by total lines spoken
+top3_iron_speakers # by total lines spoken
+```
 
+```{r}
 
 #         14. Who does James Rhodes interact with in the movie? Are there any characters who he speaks to, but they do not speak back, or vice versa?
 
@@ -705,6 +723,10 @@ get.neighborhood(iron_network, 3, "in") # All the above characters speak back to
                                         # In conclusion, James does not speak to Obadiah
         
        
+```
+
+```{r}
+
 
 #         15. Visualise the network so that node size depends on some centrality measure and node colour corresponds to the sex of the character.
 
@@ -712,25 +734,21 @@ get.neighborhood(iron_network, 3, "in") # All the above characters speak back to
 # Inspired on Pete Jones (2022) in https://www.petejon.es/posts/2020-03-03-movienetdata/
         
 
-dev.off()
+V(iron_g)$label <- V(iron_g)$vertex.names
+V(iron_g)$degree <- igraph::degree(iron_g)
 
-
-
-V(iron_igraph)$label <- V(iron_igraph)$char_name
-V(iron_igraph)$degree <- igraph::degree(iron_igraph)
-
-V(iron_igraph)$label
-V(iron_igraph)$degree 
+V(iron_g)$label
+V(iron_g)$degree 
 
 
 set.seed(578)
 
-plot(iron_igraph, label= iron_igraph$char_name,
+plot(iron_g, label= iron_g$char_name,
      edge.col = "blue", 
      edge.arrow.size=.06, 
-     vertex.color= ifelse(V(iron_igraph)$char_female==1, # Colored by sex
+     vertex.color= ifelse(V(iron_g)$char_female==1, # Colored by sex
                           "yellow", "red"),
-     vertex.size= V(iron_igraph)$degree*0.8,    # By degree centrality 
+     vertex.size= V(iron_g)$degree*0.8,    # By degree centrality 
      vertex.frame.color="grey",
      vertex.label.color="black", 
      vertex.label.cex=0.6,
@@ -739,9 +757,12 @@ plot(iron_igraph, label= iron_igraph$char_name,
      layout= layout.kamada.kawai, 
      main = "Sociogram of Iron Man (2008)") 
 
+```
+
+```{r}
 
 
-#         16. Are there different communities in the network (use Louvain algorithm)? 
+# 16. Are there different communities in the network (use Louvain algorithm)? 
 #            Describe, interpret and visualise the results.
 
 
@@ -779,7 +800,9 @@ plot(iron_lou,
      vertex.size= 10, 
      vertex.label.cex=0.6)
 
+```
 
+```{r}
 
 #         17. Perform clustering based on edge betweenness for an undirected network (set seed = 2). 
 #            How closely do the clustering results match with the community algorithm results? 
@@ -868,13 +891,19 @@ plot(iron_g, vertex.label=iron_clu,
 # Average path length ok
 # Reciprocity
 igraph::reciprocity(net_routes)
-igraph::reciprocity(iron_igraph)
+igraph::reciprocity(iron_g)
 # Communities ok
 # Most central node ok
 
 
 
-### PART B (own network with 16 actors)-----------------------------------------
+```
+
+### PART B:
+
+##### Own network with 16 actors
+
+```{r}
 
 
 #       19. Compare your network to a random network and small world network of the same size (also set seed). 
@@ -942,8 +971,12 @@ mean_distance(own_igraph, directed=T) # 2.378
 igraph::reciprocity(own_igraph)# 0.22
 
 
+```
 
-# Random 
+##### Random
+
+```{r}
+
 
 set.seed(123)
 random_igraph <- erdos.renyi.game(100, 340, type = "gnm")
@@ -969,6 +1002,10 @@ igraph::reciprocity(random_igraph)# 1
 
 
 
+```
+
+```{r}
+
 # Small world
 
 set.seed(898)
@@ -992,6 +1029,10 @@ mean_distance(small_igraph, directed=F) # 10.1657
 
 igraph::reciprocity(small_igraph)# 1
 
+
+```
+
+```{r}
 
 
 #       20. Present a very basic visualisation of all 3 networks (just to capture the basic structure of connections).
@@ -1045,6 +1086,10 @@ plot(small_igraph,                       # Small world
 
 
 
+```
+
+```{r}
+
 
 #       21. Create a list of top 5 members by 3 centrality measures for your network. 
 #          In your network:
@@ -1085,9 +1130,7 @@ Cen_own <- Centrality_own %>% arrange(desc(Degree))
 top_own<- head(Cen_own, 5)
 
 
-dev.off()
-
-grid.table(top_own)
+top_own
 
 
 
@@ -1103,6 +1146,10 @@ igraph::degree(own_igraph, "Philipp", mode="all")
 igraph::degree(own_igraph, "Philipp", mode="in")
 
 igraph::degree(own_igraph, "Philipp", mode="out")
+
+```
+
+```{r}
 
 
 #         22. Create a visualisation of your social network (use labels, colours etc).
@@ -1124,9 +1171,5 @@ plot(own_igraph,
      vertex.label.dist=.9, 
      edge.curved=0.2, 
      layout= layout.kamada.kawai)  
-
-
-
-
 
 ```
