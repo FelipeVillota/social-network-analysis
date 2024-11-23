@@ -33,12 +33,24 @@ library(networkR)
 
 ```
 
-## Including Plots
+### PART A:
 
-You can also embed plots, for example:
+#### AIRLINES (routes between cities)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+# Loading the data: Airlines database(s)
+
+
+
+ldply(.data = "C:/Users/USER/Desktop/codebaker/all_r/social-network-analysis/sna-exam-using-social-theory/airlines.zip", .fun = unzip, exdir= dir)
+
+edges = read.csv("C:/Users/USER/Desktop/codebaker/all_r/social-network-analysis/sna-exam-using-social-theory/airlines_edges_2.csv")
+
+nodes = read.csv("C:/Users/USER/Desktop/codebaker/all_r/social-network-analysis/sna-exam-using-social-theory/airlines_nodes_2.csv")
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+
+
+```
