@@ -181,12 +181,10 @@ hist(igraph::degree(net_routes, mode = "all"))
 
 ```
 
+###### Network Visualization
+
 ```{r}
-
-
 # Plotting the network of routes(flights) made between airports
-
-
 set.seed(369)
 
 plot(net_routes, 
@@ -199,9 +197,7 @@ plot(net_routes,
      vertex.label.dist=.5, 
      edge.curved=0.2) 
 
-# We can highlight the nodes by their degrees on the plot
-
-
+# Highlighting nodes by degrees
 set.seed(333)
 
 plot(net_routes, 
@@ -213,13 +209,14 @@ plot(net_routes,
      vertex.label.cex=0.6,
      vertex.label.dist=.9, 
      edge.curved=0.2, 
-     layout= layout.kamada.kawai)  
+     layout= layout.kamada.kawai)
+```
 
+###### Hub and authorities scores
 
+```{r}
 # Hub and authorities scores 
-
 net_hub <- igraph::hub_score(net_routes)$vector
-
 net_auth <- igraph::authority_score(net_routes)$vector
 
 net_hub
@@ -229,15 +226,15 @@ par(mfrow =c(1,2))
 
 plot(net_routes,
      main= "Hubs",
-edge.arrow.size=.06, 
-vertex.color= rainbow(123), 
-vertex.size= net_hub*10,
-vertex.frame.color="grey",
-vertex.label.color="black", 
-vertex.label.cex=0.6,
-vertex.label.dist=.9, 
-edge.curved=0.2, 
-layout= layout.kamada.kawai)
+     edge.arrow.size=.06, 
+     vertex.color= rainbow(123), 
+     vertex.size= net_hub*10,
+     vertex.frame.color="grey",
+     vertex.label.color="black", 
+     vertex.label.cex=0.6,
+     vertex.label.dist=.9, 
+     edge.curved=0.2, 
+     layout= layout.kamada.kawai)
 
 plot(net_routes,
      main= "Authorities",
@@ -252,6 +249,11 @@ plot(net_routes,
      layout= layout.kamada.kawai)
 
 par(mfrow =c(1,1))
+```
+
+###### Community Detection
+
+```{r}
 
 
 # Communities
@@ -266,10 +268,15 @@ plot(net_comm_1,
      vertex.label.cex=0.6)
 
 
+```
+
+###### Network Properties Analysis
+
+```{r}
 
 # Adjacency matrix
 
-as_adj( net_routes,
+as_adj_matrix( net_routes,
         type = c("both"),
         attr = NULL,
         edges = TRUE,
@@ -286,10 +293,13 @@ as_adjacency_matrix(net_routes, attr=NULL)
 head(edges_1,50)
 
 as_edgelist(net_routes, names=T)
+```
 
+### Network Analysis Questions
 
+#### Question 1: Network Direction
 
-
+```{r}
 
 
 # Questions (7 in total):
