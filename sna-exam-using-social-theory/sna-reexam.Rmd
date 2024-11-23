@@ -550,6 +550,8 @@ plot(lou_net_routes,
 
 ### IRON MAN MOVIE (interactions of characters)
 
+#### Loading libraries and dataset 
+
 ```{r}
 
 library(devtools)
@@ -569,6 +571,8 @@ iron$node_list
 iron$adjacency
 ```
 
+#### Nodes and edges 
+
 ```{r}
 
 # Node list
@@ -585,6 +589,8 @@ iron_edges <- as.data.frame(iron_edgelist) #
 
 ```
 
+#### Network object
+
 ```{r}
 # "Network" object 
 
@@ -593,16 +599,18 @@ class(iron_network)
 iron_network
 ```
 
+#### Igraph object
+
 ```{r}
 
-# # "Igraph" object
-# 
+# # # "Igraph" object
+# # 
 # iron_igraph = graph_from_data_frame(d=iron_edges, vertices = iron_nodes) #
 # class(iron_igraph)
 # iron_igraph
-# 
-# 
-# # or
+# # 
+# # 
+# # # or
 
 
 iron_g <- asIgraph(iron_network) #
@@ -611,10 +619,11 @@ iron_g
 
 ```
 
+#### Plot of adjacency matrix
+
 ```{r}
 
-
-# Plot of adjacency matrix, as done by Matthew Lincoln (2014) in: https://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html
+#  As done by Matthew Lincoln (2014) in: https://matthewlincoln.net/2014/12/20/adjacency-matrix-plots-with-r-and-ggplot2.html
 
 
 ggplot(iron_edges, aes(x = V1, y = V2)) +
