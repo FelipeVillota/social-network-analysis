@@ -550,7 +550,7 @@ plot(lou_net_routes,
 
 ### IRON MAN MOVIE (interactions of characters)
 
-##### Loading libraries and dataset 
+##### Loading libraries and dataset
 
 ```{r}
 
@@ -571,7 +571,7 @@ iron$node_list
 iron$adjacency
 ```
 
-##### Nodes and edges 
+##### Nodes and edges
 
 ```{r}
 
@@ -640,11 +640,9 @@ ggplot(iron_edges, aes(x = V1, y = V2)) +
 
 ```
 
+##### 8. Is the network directed or undirected?
+
 ```{r}
-
-
-#         8. Is the network directed or undirected?
-
 
 # summary(iron_igraph)
 summary(iron_g)
@@ -655,8 +653,10 @@ is.directed(iron_g)
 
 ```
 
+##### 9. How many actors and ties there are?
+
 ```{r}
-#         9. How many actors and ties there are?
+#         
 
 network.edgecount(iron_network)  # 54 connections 
 
@@ -665,10 +665,12 @@ network.vertex.names(iron_network) # Characters' names
 
 ```
 
+##### 10. What is the density of the network?
+
 ```{r}
 
 
-#         10. What is the density of the network?
+#         
 
 network.density(iron_network) # 0.1764706    
 
@@ -676,9 +678,11 @@ edge_density(iron_g, loops = FALSE) # 0.1764706
 
 ```
 
+##### 11. What is the average degree of the network?
+
 ```{r}
 
-#         11. What is the average degree of the network?
+#         
 
 # Total edges / total nodes
 
@@ -690,11 +694,13 @@ edge_density(iron_g, loops = FALSE) # 0.1764706
 
 ```
 
+##### 12. What is the average shortest path of the network?
+
 ```{r}
 
 
 
-#         12. What is the average shortest path of the network?
+#         
 
 mean_distance(iron_g, directed=T) # The mean of the shortest path between 
 #  each pair of vertices = 1.98366 
@@ -702,18 +708,22 @@ mean_distance(iron_g, directed=T) # The mean of the shortest path between
 distances(iron_g, weights = NA)
 ```
 
+##### 13. Who are the 3 most important characters in this movie in terms of speaking themselves?
+
 ```{r}
 
 
-#         13. Who are the 3 most important characters in this movie in terms of speaking themselves?
+#         
 
 top3_iron_speakers<- slice_max(iron_nodes, order_by = iron_nodes$nlines, n= 3)
 top3_iron_speakers # by total lines spoken
 ```
 
+##### 14. Who does James Rhodes interact with in the movie? Are there any characters who he speaks to, but they do not speak back, or vice versa?
+
 ```{r}
 
-#         14. Who does James Rhodes interact with in the movie? Are there any characters who he speaks to, but they do not speak back, or vice versa?
+#         
 
 # As a "Network" object
 
@@ -725,11 +735,12 @@ get.neighborhood(iron_network, 3, "in") # All the above characters speak back to
        
 ```
 
+##### 15. Visualize the network so that node size depends on some centrality measure and node colour corresponds to the sex of the character.
+
 ```{r}
 
 
-#         15. Visualise the network so that node size depends on some centrality measure and node colour corresponds to the sex of the character.
-
+#       
 
 # Inspired on Pete Jones (2022) in https://www.petejon.es/posts/2020-03-03-movienetdata/
         
@@ -759,11 +770,9 @@ plot(iron_g, label= iron_g$char_name,
 
 ```
 
+##### 16. Are there different communities in the network (use Louvain algorithm)? Describe, interpret and visualise the results.
+
 ```{r}
-
-
-# 16. Are there different communities in the network (use Louvain algorithm)? 
-#            Describe, interpret and visualise the results.
 
 
 is_connected(iron_g) # TRUE, the network is connected, all nodes are connected somehow
@@ -802,13 +811,11 @@ plot(iron_lou,
 
 ```
 
+##### 17. Perform clustering based on edge betweenness for an undirected network (set seed = 2). How closely do the clustering results match with the community algorithm results? Tabulate the two memberships and calculate the association between the two memberships (??-squared)). Describe, interpret and visualise the results.
+
 ```{r}
 
-#         17. Perform clustering based on edge betweenness for an undirected network (set seed = 2). 
-#            How closely do the clustering results match with the community algorithm results? 
-#            Tabulate the two memberships and calculate the association between the 
-#            two memberships (??-squared)). Describe, interpret and visualise the results.
-
+#     
 
 # Dendrogram
 
@@ -874,15 +881,13 @@ plot(iron_g, vertex.label=iron_clu,
      vertex.label.dist=.5, 
      edge.curved=0.2)
      
-   
+```
 
+18\. Briefly compare the two networks to other real-life networks (use the examples from the last slide in Lecture 2). Include a table with the main descriptions of networks that you compare and interpret the results.
 
+```{r}
 
-
-#         18. Briefly compare the two networks to other real-life networks 
-#             (use the examples from the last slide in Lecture 2). 
-#             Include a table with the main descriptions of networks that you compare 
-#            and interpret the results.
+#         
 
 # Airlines & Iron Man movie (2008), GLOBAL MEASURES
 
@@ -894,8 +899,6 @@ igraph::reciprocity(net_routes)
 igraph::reciprocity(iron_g)
 # Communities ok
 # Most central node ok
-
-
 
 ```
 
